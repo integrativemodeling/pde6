@@ -435,7 +435,7 @@ class run_class():
             output["xlms_"+label]=ln.evaluate(False)
             
             aae(float(initialscores["xlms_"+label]),
-                                                output["xlms_"+label],7,"xlms1: test failed")
+                                                output["xlms_"+label],7,"xlms_%s: test failed" % label)
 
             d0=IMP.core.XYZ(p0)
             d1=IMP.core.XYZ(p1)
