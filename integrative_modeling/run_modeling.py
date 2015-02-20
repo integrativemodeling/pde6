@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import IMP
 import IMP.core
 import IMP.em
@@ -176,7 +177,7 @@ class run_class():
         #force restraint even if it belong to the same rigid body, use it for ambiguous restraints
         if (tokens[len(tokens)-1]=="F"): force_restraint=True
 
-        print "attempting to add restraint between residue %d of chain %s and residue %d of chain %s" % (r1,c1,r2,c2)
+        print("attempting to add restraint between residue %d of chain %s and residue %d of chain %s" % (r1,c1,r2,c2))
 
         p1s=[]
         p2s=[]
@@ -189,13 +190,13 @@ class run_class():
             s1=IMP.atom.Selection(prot1, residue_index=r1, atom_type=IMP.atom.AT_CA)
             p1=(s1.get_selected_particles()[0])
           except:
-            print "WARNING> residue %d of chain %s is not there" % (r1,c1)
+            print("WARNING> residue %d of chain %s is not there" % (r1,c1))
             continue
           try:
             s2=IMP.atom.Selection(prot1, residue_index=r2, atom_type=IMP.atom.AT_CA)
             p2=(s2.get_selected_particles()[0])
           except:
-            print "WARNING> residue %d of chain %s is not there" % (r2,c2)
+            print("WARNING> residue %d of chain %s is not there" % (r2,c2))
             continue
 
         if (c1!=c2):
@@ -205,33 +206,33 @@ class run_class():
             s1=IMP.atom.Selection(prot1, residue_index=r1, atom_type=IMP.atom.AT_CA)
             p1=(s1.get_selected_particles()[0])
           except:
-            print "WARNING> residue %d of chain %s is not there" % (r1,c1)
+            print("WARNING> residue %d of chain %s is not there" % (r1,c1))
             continue
           try:
             s2=IMP.atom.Selection(prot2, residue_index=r2, atom_type=IMP.atom.AT_CA)
             p2=(s2.get_selected_particles()[0])
           except:
-            print "WARNING> residue %d of chain %s is not there" % (r2,c2)
+            print("WARNING> residue %d of chain %s is not there" % (r2,c2))
             continue
 
 
-        print "attempting to add restraint between residue %d of chain %s and residue %d of chain %s" % (r1,c1,r2,c2)
+        print("attempting to add restraint between residue %d of chain %s and residue %d of chain %s" % (r1,c1,r2,c2))
                               
         #check whether the atom pair belongs to the same rigid body          
         if(IMP.core.RigidMember.get_is_setup(p1) and IMP.core.RigidMember.get_is_setup(p1) and
                IMP.core.RigidMember(p1).get_rigid_body() == IMP.core.RigidMember(p2).get_rigid_body() and not force_restraint): 
-               print "WARNING> residue %d of chain %s and residue %d of chain %s belong to the same rigid body" % (r1,c1,r2,c2)                
+               print("WARNING> residue %d of chain %s and residue %d of chain %s belong to the same rigid body" % (r1,c1,r2,c2))
                continue
 
             #this list contain the list of simmetric pairs to avoid duplications
         if (p1,p2,crosslinker) in addedd_pairs_list: 
-                print "WARNING> pair %d %s %d %s already there" % (r1,c1,r2,c2)                
+                print("WARNING> pair %d %s %d %s already there" % (r1,c1,r2,c2))
                 continue
         if (p2,p1,crosslinker) in addedd_pairs_list: 
-                print "WARNING> pair %d %s %d %s already there" % (r1,c1,r2,c2)                
+                print("WARNING> pair %d %s %d %s already there" % (r1,c1,r2,c2))
                 continue
             
-        print "added pair %d %s %d %s" % (r1,c1,r2,c2)   
+        print("added pair %d %s %d %s" % (r1,c1,r2,c2))
         index+=1
         addedd_pairs_list.append((p1,p2,crosslinker))
 
@@ -279,8 +280,8 @@ class run_class():
 
         #####################################################
              
-    def add_symmetry_restraint(self,(rigid_bodies_ref,rigid_bodies_copy),transformation):
-         
+    def add_symmetry_restraint(self,rigid_bodies,transformation):
+        rigid_bodies_ref,rigid_bodies_copy = rigid_bodies
         sm=IMP.core.TransformationSymmetry(transformation)
         lc=IMP.container.ListSingletonContainer(self.m)        
         for i in range(len(rigid_bodies_ref)):
