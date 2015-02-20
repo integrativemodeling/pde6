@@ -14,7 +14,7 @@ MODELLER is used to generate initial model for the structure using multiple temp
 
 ## Integrative modeling with IMP
 
-The initial models do not fit well into 3D EM density map (20A resolution).
+The initial models do not fit well into 3D EM density map (20Å resolution).
 Therefore, IMP is used to fit the complex into the electron microscopy density map.
 
 Usage and content of the directory `integrative_modeling`
