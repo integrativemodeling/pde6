@@ -432,6 +432,9 @@ class run_class():
             chain2=self.pairs[i][7][1]
             
             label=str(resid1)+":"+chain1+"_"+str(resid2)+":"+chain2
+            # For duplicate crosslinks, only check the first one
+            if "xlms_" + label in output:
+                continue
             output["xlms_"+label]=ln.evaluate(False)
             
             aae(float(initialscores["xlms_"+label]),
