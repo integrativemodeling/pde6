@@ -147,10 +147,10 @@ class run_class():
      #k=1/sigma^2
      hf={}
      
-     hf["BS3"]   =IMP.core.TruncatedHarmonicBound(12.0,1.0/5.0/5.0,15.0,5)
-     hf["SMSB"]  =IMP.core.TruncatedHarmonicBound(10.0,1.0/3.6/3.6,13.0,5)
-     hf["BSPEG5"]=IMP.core.TruncatedHarmonicBound(19.2,1.0/6.8/6.8,24.0,5)
-     hf["BSPEG9"]=IMP.core.TruncatedHarmonicBound(26.4,1.0/9.4/9.4,34.0,5)
+     hf["BS3"]   =IMP.core.TruncatedHarmonicBound(12.0,1.0/5.0/5.0,15.0,7)
+     hf["SMSB"]  =IMP.core.TruncatedHarmonicBound(10.0,1.0/3.6/3.6,13.0,7)
+     hf["BSPEG5"]=IMP.core.TruncatedHarmonicBound(19.2,1.0/6.8/6.8,24.0,7)
+     hf["BSPEG9"]=IMP.core.TruncatedHarmonicBound(26.4,1.0/9.4/9.4,34.0,7)
 
      
   
