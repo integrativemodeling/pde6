@@ -7,7 +7,7 @@ import IMP.algebra
 import IMP.atom
 import IMP.container
 import sys
-
+import os
 
                
 
@@ -761,6 +761,8 @@ if __name__ == "__main__":
     except:
       test=False
     
+    if not os.path.exists('output'):
+        os.mkdir('output')
     IMP.set_log_level(IMP.TERSE)
     rc=run_class()
     
