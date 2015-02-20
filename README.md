@@ -65,4 +65,4 @@ _Testable_: Yes.
 _Parallelizeable_: No
 
 _Publications_:
- - in preparation
+ - X. Zeng-Elmore, X. Gao, R. Pellarin, D. Schneidman-Duhovny, X. Zhang, K. Kozacka, Y. Tang, A. Sali, R. Chalkley, R. Cote, F. Chu. [Molecular architecture of photoreceptor phosphodiesterase elucidated by chemical cross-linking and integrative modeling](http://www.ncbi.nlm.nih.gov/pubmed/25149264), J Mol Biol 426, 3713-3728, 2014.
