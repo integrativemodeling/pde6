@@ -1,5 +1,3 @@
-# PDE6
-
 These scripts demonstrate the use of [IMP](http://www.integrativemodeling.org/),
 [MODELLER](http://salilab.org/modeller/) and
 [Chimera](http://www.cgl.ucsf.edu/chimera/) in the modeling of the
