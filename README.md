@@ -1,18 +1,18 @@
-These scripts demonstrate the use of [IMP](http://www.integrativemodeling.org/),
+These scripts demonstrate the use of [IMP](http://integrativemodeling.org/),
 [MODELLER](http://salilab.org/modeller/) and
 [Chimera](http://www.cgl.ucsf.edu/chimera/) in the modeling of the
 phosphodiesterase (PDE6).
 
 ## Homology modeling
 
-MODELLER is used to generate initial model for the structure using multiple templates 
-(PDB codes 1tbf, 3bjc, 3dba, 3ibj). Cross links, symmetry and secondary structure restraints are used in modelling:
+MODELLER is used to generate initial models for the structure using multiple templates
+(PDB codes 1tbf, 3bjc, 3dba, 3ibj). Cross links, symmetry and secondary structure restraints are used in modeling:
  `cd comparative_modelling; ./model_mult.py`
 
 
 ## Integrative modeling with IMP
 
-The initial models do not fit well into 3D EM density map (20Å resolution).
+The initial models do not fit well into the 3D EM density map (20Å resolution).
 Therefore, IMP is used to fit the complex into the electron microscopy density map.
 
 Usage and content of the directory `integrative_modeling`
@@ -37,11 +37,12 @@ all output data will be stored in output/
 `bin/get_frames.sh`
 
 100 best scoring frames will be stored in `best_pdb/`
-clustering data will be stored in `clustering/`
+and clustering data will be stored in `clustering/`
 
 ## Refinement
 
 Finally the final models are rebuilt and refined with Modeller:
+
 `cd model_refinement/cluster1; ./model-single.py`
 
 
