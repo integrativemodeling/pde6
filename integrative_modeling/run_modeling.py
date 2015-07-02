@@ -62,7 +62,7 @@ class run_class():
             pr=IMP.core.PairRestraint(dps,IMP.ParticlePair(p0,p1))
             rs.add_restraint(pr)
 
-        self.m.add_restraint(rs)
+        self.all_restraints.add_restraint(rs)
         self.rest_set[('link',prot)]=rs
 
         #####################################################
@@ -80,7 +80,7 @@ class run_class():
         lsa.add_particles(atoms)
         evr=IMP.core.ExcludedVolumeRestraint(lsa,kappa)
         rs.add_restraint(evr)
-        self.m.add_restraint(rs)
+        self.all_restraints.add_restraint(rs)
         self.rest_set[('exvo',prot)]=rs
 
         #####################################################
@@ -110,7 +110,7 @@ class run_class():
             evr3=IMP.container.PairsRestraint(ssps,cbpc)
             rs.add_restraint(evr3)
 
-        self.m.add_restraint(rs)
+        self.all_restraints.add_restraint(rs)
         self.rest_set[('exvo_symm',prot_ref)]=rs
 
         #####################################################
@@ -127,7 +127,7 @@ class run_class():
         lsc.add_particles(IMP.atom.get_leaves(prot))
         r3= IMP.container.SingletonsRestraint(ss3, lsc)
         rs.add_restraint(r3)
-        self.m.add_restraint(rs)
+        self.all_restraints.add_restraint(rs)
         self.rest_set[('barr',prot)]=rs
 
         #####################################################
@@ -245,7 +245,7 @@ class run_class():
             self.pairs.append((p1,  p2,  crosslinker,  rs_name,  100,  100,  (r1,c1),  (r2,c2), crosslinker, ln))
 
 
-        self.m.add_restraint(rs)
+        self.all_restraints.add_restraint(rs)
         self.rest_set["xlms"]=rs
 
     ##############################################
@@ -274,7 +274,7 @@ class run_class():
             density_threshold = IMP.em.get_threshold_for_approximate_mass(map, 1.25*mass)
             efr = IMP.em.EnvelopeFitRestraint(particles, map, 11.0, 5.0)
             efr.set_weight(6.)
-            self.m.add_restraint(efr)
+            self.all_restraints.add_restraint(efr)
             self.rest_set[(resname,self.prot[icopy])]=efr
 
         #####################################################
@@ -308,7 +308,7 @@ class run_class():
                     pr=IMP.core.PairRestraint(dps,IMP.ParticlePair(p1,p2))
                     rset.add_restraint(pr)
 
-        self.m.add_restraint(rset)
+        self.all_restraints.add_restraint(rset)
         self.rest_set[('Template_Restraint_'+label)]=rset
 
 
@@ -316,6 +316,7 @@ class run_class():
 
     def setup_rigid_body_MonteCarlo(self,mc_kt,mc_dx=0.3,mc_dang=0.1,bm_dr=0.5,set_return_best=False):
         mc=IMP.core.MonteCarlo(self.m)
+        mc.set_scoring_function(self.all_restraints)
         mc.set_return_best(set_return_best)
         mc.set_kt(mc_kt)
         #create a list of rigid body movers for a serial mover
@@ -363,7 +364,7 @@ class run_class():
 
         output={}
         output["Nframe"]=self.nframe
-        output["Total_Score"]=self.m.evaluate(False)
+        output["Total_Score"]=self.all_restraints.evaluate(False)
 
         for i in range(len(self.pairs)):
 
@@ -416,7 +417,7 @@ class run_class():
             initialscores=eval(l)
 
         output={}
-        output["Total_Score"]=self.m.evaluate(False)
+        output["Total_Score"]=self.all_restraints.evaluate(False)
 
         aae(float(initialscores["Total_Score"]),output["Total_Score"],7,"Total_Score: test failed")
 
@@ -570,6 +571,7 @@ class run_class():
 
 
         self.m = IMP.Model()
+        self.all_restraints = IMP.RestraintSet(self.m, "All restraints")
 
         #####################################################
         #read pdb
