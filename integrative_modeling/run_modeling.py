@@ -59,7 +59,7 @@ class run_class():
 
             h=IMP.core.HarmonicUpperBound(dist0, kappa)
             dps=IMP.core.DistancePairScore(h)
-            pr=IMP.core.PairRestraint(dps,IMP.ParticlePair(p0,p1))
+            pr=IMP.core.PairRestraint(m, dps,IMP.ParticlePair(p0,p1))
             rs.add_restraint(pr)
 
         self.all_restraints.add_restraint(rs)
@@ -77,7 +77,7 @@ class run_class():
             radius=IMP.algebra.get_ball_radius_from_volume_3d(vol)
             IMP.core.XYZR(atom).set_radius(radius)
         lsa=IMP.container.ListSingletonContainer(self.m)
-        lsa.add_particles(atoms)
+        lsa.add(atoms)
         evr=IMP.core.ExcludedVolumeRestraint(lsa,kappa)
         rs.add_restraint(evr)
         self.all_restraints.add_restraint(rs)
@@ -91,14 +91,14 @@ class run_class():
 
         atoms_ref=IMP.atom.get_by_type(prot_ref, IMP.atom.ATOM_TYPE)
         ls_ref=IMP.container.ListSingletonContainer(self.m)
-        ls_ref.add_particles(atoms_ref)
+        ls_ref.add(atoms_ref)
 
 
         ls_symm=IMP.container.ListSingletonContainer(self.m)
         for prot_symm in prot_symm_list:
 
             atoms_symm=IMP.atom.get_by_type(prot_symm, IMP.atom.ATOM_TYPE)
-            ls_symm.add_particles(atoms_symm)
+            ls_symm.add(atoms_symm)
             for atom in atoms_symm:
                 restype=IMP.atom.Residue(IMP.atom.Atom(atom).get_parent()).get_residue_type()
                 vol=IMP.atom.get_volume_from_residue_type(restype)
@@ -124,7 +124,7 @@ class run_class():
         lsc= IMP.container.ListSingletonContainer(self.m)
         IMP.atom.get_by_type
 
-        lsc.add_particles(IMP.atom.get_leaves(prot))
+        lsc.add(IMP.atom.get_leaves(prot))
         r3= IMP.container.SingletonsRestraint(ss3, lsc)
         rs.add_restraint(r3)
         self.all_restraints.add_restraint(rs)
@@ -237,7 +237,7 @@ class run_class():
 
             rs_name='restraint_'+str(index)
             dps=IMP.core.DistancePairScore(hf[crosslinker])
-            ln=IMP.core.PairRestraint(dps,IMP.ParticlePair(p1,p2))
+            ln=IMP.core.PairRestraint(m, dps,IMP.ParticlePair(p1,p2))
             ln.set_weight(0.5)
             rs.add_restraint(ln)
 
@@ -285,7 +285,7 @@ class run_class():
         lc=IMP.container.ListSingletonContainer(self.m)
         for i in range(len(rigid_bodies_ref)):
             IMP.core.Reference.setup_particle(rigid_bodies_copy[i],rigid_bodies_ref[i])
-            lc.add_particle(rigid_bodies_copy[i])
+            lc.add(rigid_bodies_copy[i])
         c=IMP.container.SingletonsConstraint(sm,None,lc)
         self.m.add_score_state(c)
 
@@ -305,7 +305,7 @@ class run_class():
                 if dist <= 6.5:
                     hf=IMP.core.Harmonic(dist,1.0)
                     dps=IMP.core.DistancePairScore(hf)
-                    pr=IMP.core.PairRestraint(dps,IMP.ParticlePair(p1,p2))
+                    pr=IMP.core.PairRestraint(m, dps,IMP.ParticlePair(p1,p2))
                     rset.add_restraint(pr)
 
         self.all_restraints.add_restraint(rset)
