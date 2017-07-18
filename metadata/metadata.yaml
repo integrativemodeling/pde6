@@ -3,5 +3,5 @@ tags: [chemical crosslinks, EM density map, MODELLER]
 pmid: 25149264
 prereqs: [modeller, gcc]
 test:
-    runtime: 72h
+    runtime: 96h
     build: fast
