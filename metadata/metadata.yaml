@@ -1,7 +1,7 @@
 title: PDE6
 tags: [chemical crosslinks, EM density map, MODELLER]
 pmid: 25149264
-prereqs: [modeller, gcc]
+prereqs: [modeller, gcc, python/numpy]
 test:
     runtime: 96h
     build: fast
