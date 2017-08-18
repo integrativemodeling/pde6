@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import optparse
 import difflib
 
@@ -32,13 +33,13 @@ if len(args) != 0:
 if result.filename!=None:
    f=open(result.filename,"r")
 else:
-   print "Error: No file name provided. Use -h for help"
+   print("Error: No file name provided. Use -h for help")
    exit()
 
 #get the keys from the first line
 for line in f.readlines():
     d=eval(line)
-    klist=d.keys()
+    klist=list(d.keys())
     klist.sort()
     break
 f.close()    
@@ -46,7 +47,7 @@ f.close()
 #print the keys    
 if result.print_fields:    
     for key in klist:
-        print key
+        print(key)
 
 #the field string matching is by default strict, i.e., the input string must be the same as the one in the file
 match_strictness=1.0
@@ -59,14 +60,14 @@ if result.fields!=None:
    for field in result.fields:
       found_entries=difflib.get_close_matches(field,klist,1,match_strictness)
       if len(found_entries)==0:
-         print "Error: field "+field+" non found"
+         print("Error: field "+field+" non found")
          exit()
       else:
          field_list.append(found_entries[0])
    
    #print comment line   
    s0=' '.join(["%20s" % (field) for field in field_list])
-   print "# "+s0
+   print("# "+s0)
    
    #print fields values
    f=open(result.filename,"r")
@@ -76,10 +77,10 @@ if result.fields!=None:
       try:
          d=eval(line)
       except:
-         print "# Warning: skipped line number " + str(line_number) + " not a valid line"
+         print("# Warning: skipped line number " + str(line_number) + " not a valid line")
          continue
       s0=' '.join(["%20s" % (str(d[field])) for field in field_list])
-      print "> "+s0
+      print("> "+s0)
    f.close()
 
 if result.single_column_field!=None:
@@ -94,18 +95,18 @@ if result.single_column_field!=None:
       try:
          d=eval(line)
       except:
-         print "# Warning: skipped line number " + str(line_number) + " not a valid line"
+         print("# Warning: skipped line number " + str(line_number) + " not a valid line")
          continue   
       for key in field_list:
-         print key, d[key]
-      print " "               
+         print(key, d[key])
+      print()
    f.close()      
 
 if (result.search_field!=None and result.search_value!=None):
    #check whether the fields exist and convert them to best maching existing field names
    found_entries=difflib.get_close_matches(result.search_field,klist,1,match_strictness)
    if len(found_entries)==0:
-       print "Error: field "+results.search_field+" non found"
+       print("Error: field "+results.search_field+" non found")
        exit()
    else:
        corrected_field=found_entries[0]
@@ -117,11 +118,11 @@ if (result.search_field!=None and result.search_value!=None):
       try:
          d=eval(line)
       except:
-         print "# Warning: skipped line number " + str(line_number) + " not a valid line"
+         print("# Warning: skipped line number " + str(line_number) + " not a valid line")
          continue
       if (str(d[corrected_field])==result.search_value):
          for key in klist:
-             print key, d[key]
+             print(key, d[key])
    f.close()
 
 if (result.print_raw_number!=None):
@@ -134,10 +135,10 @@ if (result.print_raw_number!=None):
         try:
           d=eval(line)
         except:
-          print "# Warning: skipped line number " + str(line_number) + " not a valid line"
+          print("# Warning: skipped line number " + str(line_number) + " not a valid line")
           break
         for key in klist:
-           print key, d[key]
+           print(key, d[key])
    f.close()
        
 
