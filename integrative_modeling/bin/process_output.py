@@ -31,10 +31,10 @@ if len(args) != 0:
 
 #open the file
 if result.filename!=None:
-   f=open(result.filename,"r")
+    f=open(result.filename,"r")
 else:
-   print("Error: No file name provided. Use -h for help")
-   exit()
+    print("Error: No file name provided. Use -h for help")
+    exit()
 
 #get the keys from the first line
 for line in f.readlines():
@@ -42,10 +42,10 @@ for line in f.readlines():
     klist=list(d.keys())
     klist.sort()
     break
-f.close()    
-    
-#print the keys    
-if result.print_fields:    
+f.close()
+
+#print the keys
+if result.print_fields:
     for key in klist:
         print(key)
 
@@ -55,91 +55,88 @@ if result.soft_match: match_strictness=0.1
 
 #print the queried fields
 if result.fields!=None:
-   field_list=[]
-   #check whether the fields exist and convert them to best maching existing field names
-   for field in result.fields:
-      found_entries=difflib.get_close_matches(field,klist,1,match_strictness)
-      if len(found_entries)==0:
-         print("Error: field "+field+" non found")
-         exit()
-      else:
-         field_list.append(found_entries[0])
-   
-   #print comment line   
-   s0=' '.join(["%20s" % (field) for field in field_list])
-   print("# "+s0)
-   
-   #print fields values
-   f=open(result.filename,"r")
-   line_number=0
-   for line in f.readlines():
-      line_number+=1
-      try:
-         d=eval(line)
-      except:
-         print("# Warning: skipped line number " + str(line_number) + " not a valid line")
-         continue
-      s0=' '.join(["%20s" % (str(d[field])) for field in field_list])
-      print("> "+s0)
-   f.close()
+    field_list=[]
+    #check whether the fields exist and convert them to best maching existing field names
+    for field in result.fields:
+        found_entries=difflib.get_close_matches(field,klist,1,match_strictness)
+        if len(found_entries)==0:
+            print("Error: field "+field+" non found")
+            exit()
+        else:
+            field_list.append(found_entries[0])
+
+    #print comment line
+    s0=' '.join(["%20s" % (field) for field in field_list])
+    print("# "+s0)
+
+    #print fields values
+    f=open(result.filename,"r")
+    line_number=0
+    for line in f.readlines():
+        line_number+=1
+        try:
+            d=eval(line)
+        except:
+            print("# Warning: skipped line number " + str(line_number) + " not a valid line")
+            continue
+        s0=' '.join(["%20s" % (str(d[field])) for field in field_list])
+        print("> "+s0)
+    f.close()
 
 if result.single_column_field!=None:
-   field_list=[]
-   for k in klist:
-       if result.single_column_field in k:
-           field_list.append(k)
-              
-   f=open(result.filename,"r")
-   line_number=0
-   for line in f.readlines():
-      try:
-         d=eval(line)
-      except:
-         print("# Warning: skipped line number " + str(line_number) + " not a valid line")
-         continue   
-      for key in field_list:
-         print(key, d[key])
-      print()
-   f.close()      
+    field_list=[]
+    for k in klist:
+        if result.single_column_field in k:
+            field_list.append(k)
+
+    f=open(result.filename,"r")
+    line_number=0
+    for line in f.readlines():
+        try:
+            d=eval(line)
+        except:
+            print("# Warning: skipped line number " + str(line_number) + " not a valid line")
+            continue
+        for key in field_list:
+            print(key, d[key])
+        print()
+    f.close()
 
 if (result.search_field!=None and result.search_value!=None):
-   #check whether the fields exist and convert them to best maching existing field names
-   found_entries=difflib.get_close_matches(result.search_field,klist,1,match_strictness)
-   if len(found_entries)==0:
-       print("Error: field "+results.search_field+" non found")
-       exit()
-   else:
-       corrected_field=found_entries[0]
-   #print fields values
-   f=open(result.filename,"r")
-   line_number=0
-   for line in f.readlines():
-      line_number+=1
-      try:
-         d=eval(line)
-      except:
-         print("# Warning: skipped line number " + str(line_number) + " not a valid line")
-         continue
-      if (str(d[corrected_field])==result.search_value):
-         for key in klist:
-             print(key, d[key])
-   f.close()
+    #check whether the fields exist and convert them to best maching existing field names
+    found_entries=difflib.get_close_matches(result.search_field,klist,1,match_strictness)
+    if len(found_entries)==0:
+        print("Error: field "+results.search_field+" non found")
+        exit()
+    else:
+        corrected_field=found_entries[0]
+    #print fields values
+    f=open(result.filename,"r")
+    line_number=0
+    for line in f.readlines():
+        line_number+=1
+        try:
+            d=eval(line)
+        except:
+            print("# Warning: skipped line number " + str(line_number) + " not a valid line")
+            continue
+        if (str(d[corrected_field])==result.search_value):
+            for key in klist:
+                print(key, d[key])
+    f.close()
 
 if (result.print_raw_number!=None):
-   #check whether the fields exist and convert them to best maching existing field names
-   f=open(result.filename,"r")
-   line_number=0
-   for line in f.readlines():
-      line_number+=1
-      if (line_number==int(result.print_raw_number)):
-        try:
-          d=eval(line)
-        except:
-          print("# Warning: skipped line number " + str(line_number) + " not a valid line")
-          break
-        for key in klist:
-           print(key, d[key])
-   f.close()
-       
-
-
+    #check whether the fields exist and convert them to best maching existing field names
+    f=open(result.filename,"r")
+    line_number=0
+    for line in f.readlines():
+        line_number+=1
+        if (line_number==int(result.print_raw_number)):
+            try:
+                d=eval(line)
+            except:
+                print("# Warning: skipped line number " + str(line_number) + " not a valid line")
+                break
+            for key in klist:
+                print(key, d[key])
+    f.close()
