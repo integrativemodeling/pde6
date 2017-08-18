@@ -72,11 +72,11 @@ class Tests(unittest.TestCase):
         nexp_cluster_match = len(exp_cluster_match) - exp_cluster_match.count(0)
         # Make sure that at least 2 of the 3 expected clusters is close to one
         # of the clusters we produced (but not all the *same* cluster)
-        self.assert_(ncluster_match >= 2 and nexp_cluster_match >= 2,
-                     "Could not find any match between the %d clusters found "
-                     "in this test and 2 of the 3 'known good' clusters (match "
-                     "defined as all-atom RMSD less than 15.0A). "
-                     "RMSD matrix: %s" % (len(clusters), str(rms)))
+        self.assertTrue(ncluster_match >= 2 and nexp_cluster_match >= 2,
+                        "Could not find any match between the %d clusters "
+                        "found in this test and 2 of the 3 'known good' "
+                        "clusters (match defined as all-atom RMSD less than "
+                        "15.0A). RMSD matrix: %s" % (len(clusters), str(rms)))
 
     def test_refinement(self):
         """Test the refinement script"""
