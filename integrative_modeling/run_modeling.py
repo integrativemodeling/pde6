@@ -325,7 +325,7 @@ class run_class():
             mvs=[]
             for rb in self.rigidbody_list[icopy]:
                 rb.set_coordinates_are_optimized(True)
-                mvs.append(IMP.core.RigidBodyMover(rb, mc_dx, mc_dang))
+                mvs.append(IMP.core.RigidBodyMover(self.m, rb, mc_dx, mc_dang))
 
             for ps in IMP.atom.get_leaves(self.prot[icopy]):
 
