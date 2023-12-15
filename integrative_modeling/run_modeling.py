@@ -26,9 +26,9 @@ class run_class():
             #range() cuts the upper edge
                 rinterval=(interval[0],interval[1]+1)
                 if (interval[0]==-1 or interval[1]==-1):
-                    s=IMP.atom.Selection(prot,chains=interval[2])
+                    s=IMP.atom.Selection(prot, chain_id=interval[2])
                 else:
-                    s=IMP.atom.Selection(prot,chains=interval[2],
+                    s=IMP.atom.Selection(prot, chain_id=interval[2],
                                          residue_indexes=range(*rinterval))
                 for p in s.get_selected_particles():
                     atoms.append(IMP.core.XYZR(p))
@@ -44,13 +44,15 @@ class run_class():
         rs = IMP.RestraintSet(m,'linker')
         for pair in resrangelist:
             try:
-                s0=IMP.atom.Selection(prot, chains=pair[2], residue_index=pair[0])
+                s0=IMP.atom.Selection(prot, chain_id=pair[2],
+                                      residue_index=pair[0])
                 p0=s0.get_selected_particles()[0]
             except:
                 "error"
                 continue
             try:
-                s1=IMP.atom.Selection(prot, chains=pair[2], residue_index=pair[1])
+                s1=IMP.atom.Selection(prot, chain_id=pair[2],
+                                      residue_index=pair[1])
                 p1=s1.get_selected_particles()[0]
             except:
                 "error"
@@ -259,9 +261,9 @@ class run_class():
                 #range() cuts the upper edge
                 rinterval=(interval[0],interval[1]+1)
                 if (interval[0]==-1 or interval[1]==-1):
-                    s=IMP.atom.Selection(interval[3],chains=interval[2])
+                    s=IMP.atom.Selection(interval[3], chain_id=interval[2])
                 else:
-                    s=IMP.atom.Selection(interval[3],chains=interval[2],
+                    s=IMP.atom.Selection(interval[3], chain_id=interval[2],
                                          residue_indexes=range(*rinterval))
                 particles+=s.get_selected_particles()
             #read the map
@@ -626,9 +628,9 @@ class run_class():
         dimer=self.read_pdbs(["data/homology_model_A_A.pdb"])
 
         vsfirst= [IMP.core.XYZ(d).get_coordinates() for d in
-                   IMP.atom.Selection(dimer,chains="A").get_selected_particles()]
+                   IMP.atom.Selection(dimer, chain_id="A").get_selected_particles()]
         vssecond=[IMP.core.XYZ(d).get_coordinates() for d in
-                   IMP.atom.Selection(dimer,chains="B").get_selected_particles()]
+                   IMP.atom.Selection(dimer, chain_id="B").get_selected_particles()]
 
         transformation=[IMP.algebra.get_transformation_aligning_first_to_second(vsfirst,vssecond)]
 
@@ -679,10 +681,10 @@ class run_class():
         #setting up the template restraint
 
         self.m.update()
-        s1=IMP.atom.Selection(self.prot[0],chains="A",
+        s1=IMP.atom.Selection(self.prot[0], chain_id="A",
                               residue_indexes=range(71,453))
         ps1=s1.get_selected_particles()
-        s2=IMP.atom.Selection(self.prot_scopies[0][0],chains="A",
+        s2=IMP.atom.Selection(self.prot_scopies[0][0], chain_id="A",
                               residue_indexes=range(71,453))
         ps2=s2.get_selected_particles()
         allps=ps1+ps2
